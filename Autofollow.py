@@ -4,7 +4,7 @@ import os
 
 FIRST_RUN=False
 DEBUG=False
-INSTANCE='https://mastodon.host'
+TOOT=False
 
 BLACKLIST = {
         'users':['b@icosahedron.website','katiekats@community.highlandarrow.com','elizafox@mst3k.interlinked.me','hatf@mastodon.cloud','hatf@cybre.space','xial@ninetailed.uk','lopatto@mastodon.xyz'],
@@ -13,15 +13,16 @@ BLACKLIST = {
 
 # Register app - only once!
 if FIRST_RUN or not os.path.exists('.pytooter_clientcred.txt'):
+    username=raw_input('What is the bot login email ?')
+    password=raw_input('What is the bot login password ?')
+    INSTANCE=raw_input('What is your instance base URL ?')
+    botname=raw_input('What is your bot username e.g. followbot ?')
+
     Mastodon.create_app(
          'autofollower',
           to_file = '.pytooter_clientcred.txt',
           api_base_url=INSTANCE
     )
-    username=raw_input('What is the username ?')
-    password=raw_input('What is the password ?')
-    INSTANCE=raw_input('What is your instance ?')
-    botname=raw_input('What is your botname ?')
 
     mastodon = Mastodon(client_id = '.pytooter_clientcred.txt',api_base_url=INSTANCE)
     mastodon.log_in(
@@ -121,7 +122,7 @@ for user_id in new_user_list:
         my_followed_list.append(user_id)
         runparams['list_seen'].append(user_id)
 
-if new_followed > 0 and runparams['runcount'] > 10:
+if TOOT and new_followed > 0 and runparams['runcount'] > 10:
     mastodon.status_post('I am now following %i users out of the %i I have seen, boost some toots from others so I can see them :)' % (total_followed+new_followed,len(runparams['list_seen'])),visibility='unlisted')
     runparams['runcount'] = 1
 
