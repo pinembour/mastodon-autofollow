@@ -95,7 +95,8 @@ with open('.toots_followed.log','a') as f:
                     instance_domain=INSTANCE
                 if toot['account']['acct'] not in BLACKLIST['users'] \
                         and instance_domain not in BLACKLIST['instances'] \
-                        and ('#followme' in toot['account']['note'].lower() or '#<span>followme</span>' in toot['account']['note'].lower()):
+                        and not '#nobot' in toot['account']['note'].lower() and not '#<span>nobot</span>' in toot['account']['note'].lower() \
+                        and not '#nobot' in toot['account']['note'] and not '#<span>nobot</span>' in toot['account']['note']:
                     new_user_list.append(toot['account']['id'])
                     f.write("Toot:%s\n" % json.dumps(toot))
                 if len(toot['mentions']) > 0:
@@ -106,7 +107,9 @@ with open('.toots_followed.log','a') as f:
                             mention_domain=INSTANCE
                         if mention['acct'].lower() not in BLACKLIST['users'] \
                                 and mention_domain.lower() not in BLACKLIST['instances'] \
-                                and ('#followme' in toot['account']['note'].lower() or '#<span>followme</span>' in toot['account']['note'].lower()):
+                                and not '#nobot' in toot['account']['note'].lower() and not '#<span>nobot</span>' in toot['account']['note'].lower() \
+                                and not '#nobot' in toot['account']['note'] and not '#<span>nobot</span>' in toot['account']['note']:
+
                             new_user_list.append(mention['id'])
                             f.write("Mention:%s\n" % json.dumps(mention))
             #except:
