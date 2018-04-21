@@ -8,7 +8,7 @@ TOOT=False
 
 BLACKLIST = {
         'users':['b@icosahedron.website','katiekats@community.highlandarrow.com','elizafox@mst3k.interlinked.me','hatf@mastodon.cloud','hatf@cybre.space','xial@ninetailed.uk','lopatto@mastodon.xyz'],
-        'instances':['icosahedron.website','slime.global','toot.cat','postgrestodon.magicannon.com','toot.cafe','cmpwn.com','mstdn.jp']
+        'instances':['icosahedron.website','slime.global','toot.cat','postgrestodon.magicannon.com','toot.cafe','cmpwn.com','mstdn.jp','music.pawoo.net','pawoo.net']
         }
 
 # Register app - only once!
@@ -98,7 +98,7 @@ with open('.toots_followed.log','a') as f:
                         and not '#nobot' in toot['account']['note'].lower() and not '#<span>nobot</span>' in toot['account']['note'].lower() \
                         and not '#nobot' in toot['account']['note'] and not '#<span>nobot</span>' in toot['account']['note']:
                     new_user_list.append(toot['account']['id'])
-                    f.write("Toot:%s\n" % json.dumps(toot))
+                    #f.write("Toot:%s\n" % json.dumps(toot))
                 if len(toot['mentions']) > 0:
                     for mention in toot['mentions']:
                         if '@' in mention['acct']:
@@ -111,7 +111,7 @@ with open('.toots_followed.log','a') as f:
                                 and not '#nobot' in toot['account']['note'] and not '#<span>nobot</span>' in toot['account']['note']:
 
                             new_user_list.append(mention['id'])
-                            f.write("Mention:%s\n" % json.dumps(mention))
+                            #f.write("Mention:%s\n" % json.dumps(mention))
             #except:
             #    print('Error while trying to do something with %s' % (toot))
             runparams['since_id'] = toot['id']
